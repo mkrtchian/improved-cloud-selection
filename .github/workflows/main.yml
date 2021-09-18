@@ -66,7 +66,7 @@ jobs:
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
       - name: Install dev libs because they are not included in the production image
-        run: docker exec improved-cloud-selection poetry run poetry install
+        run: docker exec improved-cloud-selection poetry install
       - name: Pytest
         run: docker exec improved-cloud-selection poetry run python -m pytest -n auto .
       - name: Flake8
