@@ -27,7 +27,7 @@ RUN apt-get update \
 # install python dependencies
 RUN pip install --upgrade pip poetry
 COPY ./pyproject.toml ./poetry.lock ./
-RUN poetry install
+RUN poetry install --no-dev
 
 # add app
 COPY . .
