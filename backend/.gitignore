@@ -1,0 +1,7 @@
+# python
+__pycache__
+
+# pytest
+.pytest_cache/
+improved_cloud_selection/htmlcov/index.html
+.coverage
