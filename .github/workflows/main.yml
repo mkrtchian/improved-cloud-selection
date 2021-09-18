@@ -79,6 +79,7 @@ jobs:
     name: Deploy backend to Heroku
     runs-on: ubuntu-latest
     needs: [build_backend, test_backend]
+    if: github.ref == 'refs/heads/backend_codebase'
     env:
       HEROKU_APP_NAME: damp-fortress-19341
       HEROKU_REGISTRY_IMAGE: registry.heroku.com/damp-fortress-19341/improved_cloud_selection
