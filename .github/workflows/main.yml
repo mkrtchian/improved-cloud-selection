@@ -10,8 +10,8 @@ env:
   IMAGE: docker.pkg.github.com/$(echo $GITHUB_REPOSITORY | tr '[A-Z]' '[a-z]')/improved_cloud_selection
 
 jobs:
-  build:
-    name: Build Docker Image
+  build_backend:
+    name: Build backend Docker image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout master
@@ -34,8 +34,8 @@ jobs:
         run: |
           docker push ${{ env.IMAGE }}:latest
 
-  test:
-    name: Test Docker Image
+  test_backend:
+    name: Test backend with Docker image
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -73,3 +73,42 @@ jobs:
         run: docker exec improved-cloud-selection poetry run python -m black . --check
       - name: isort
         run: docker exec improved-cloud-selection poetry run python -m isort . --check-only
+
+  deploy_backend:
+    name: Deploy backend to Heroku
+    runs-on: ubuntu-latest
+    needs: [build, test]
+    env:
+      HEROKU_APP_NAME: damp-fortress-19341
+      HEROKU_REGISTRY_IMAGE: registry.heroku.com/damp-fortress-19341/improved_cloud_selection
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v2.3.4
+      - name: Log in to GitHub Packages
+        run: echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Pull image
+        run: |
+          docker pull ${{ env.IMAGE }}:latest || true
+      - name: Build image
+        run: |
+          docker build \
+            --cache-from ${{ env.IMAGE }}:latest \
+            --tag ${{ env.HEROKU_REGISTRY_IMAGE }}:latest \
+            --file ./backend/Dockerfile.prod \
+            "./backend"
+      - name: Log in to the Heroku Container Registry
+        run: docker login -u _ -p ${HEROKU_AUTH_TOKEN} registry.heroku.com
+        env:
+          HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
+      - name: Push to the registry
+        run: docker push ${{ env.HEROKU_REGISTRY_IMAGE }}
+      - name: Set environment variables
+        run: |
+          echo "HEROKU_REGISTRY_IMAGE=${{ env.HEROKU_REGISTRY_IMAGE }}" >> $GITHUB_ENV
+          echo "HEROKU_AUTH_TOKEN=${{ secrets.HEROKU_AUTH_TOKEN }}" >> $GITHUB_ENV
+      - name: Release
+        run: |
+          chmod +x ./backend/release.sh
+          ./backend/release.sh
