@@ -28,8 +28,8 @@ jobs:
           docker build \
             --cache-from ${{ env.IMAGE }}:latest \
             --tag ${{ env.IMAGE }}:latest \
-            --file ./improved_cloud_selection/Dockerfile.prod \
-            "./improved_cloud_selection"
+            --file ./backend/Dockerfile.prod \
+            "./backend"
       - name: Push image
         run: |
           docker push ${{ env.IMAGE }}:latest
@@ -53,8 +53,8 @@ jobs:
           docker build \
             --cache-from ${{ env.IMAGE }}:latest \
             --tag ${{ env.IMAGE }}:latest \
-            --file ./improved_cloud_selection/Dockerfile.prod \
-            "./improved_cloud_selection"
+            --file ./backend/Dockerfile.prod \
+            "./backend"
       - name: Run container
         run: |
           docker run \
