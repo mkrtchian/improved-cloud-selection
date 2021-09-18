@@ -1,0 +1,8 @@
+env
+
+.dockerignore
+Dockerfile
+Dockerfile.prod
+
+improved_cloud_selection/htmlcov/index.html
+.coverage
