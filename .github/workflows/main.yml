@@ -62,7 +62,6 @@ jobs:
             --name improved-cloud-selection \
             -e PORT=8765 \
             -e ENVIRONMENT=dev \
-            -e DATABASE_TEST_URL=sqlite://sqlite.db \
             -p 5003:8765 \
             ${{ env.IMAGE }}:latest
       - name: Install dev libs because they are not included in the production image
