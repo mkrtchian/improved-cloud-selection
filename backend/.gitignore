@@ -5,3 +5,6 @@ __pycache__
 .pytest_cache/
 improved_cloud_selection/htmlcov/index.html
 .coverage
+
+# mypy
+.mypy_cache
