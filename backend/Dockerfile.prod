@@ -16,6 +16,8 @@ WORKDIR $APP_HOME
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV ENVIRONMENT prod
+ENV TESTING 0
 
 # install system dependencies
 RUN apt-get update \
@@ -35,3 +37,6 @@ RUN chown -R app:app $APP_HOME
 
 # change to the app user
 USER app
+
+# run gunicorn
+CMD poetry run gunicorn --bind 0.0.0.0:$PORT improved_cloud_selection.main:app -k uvicorn.workers.UvicornWorker

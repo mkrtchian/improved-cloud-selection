@@ -3,6 +3,7 @@ version: "3.8"
 services:
   web:
     build: .
+    image: improved_cloud_selection:dev
     command: poetry run uvicorn improved_cloud_selection.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
     volumes:
       - .:/usr/src/app
