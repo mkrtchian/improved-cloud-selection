@@ -9,7 +9,9 @@ RUN addgroup --system app && adduser --system --group app
 
 # create the appropriate directories
 ENV HOME=/home/app
-WORKDIR $HOME
+ENV APP_HOME=/home/app/web
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -24,11 +26,11 @@ RUN apt-get update \
 
 # install python dependencies
 RUN pip install --upgrade pip poetry
-COPY ./pyproject.toml ./poetry.lock $HOME/
+COPY ./pyproject.toml ./poetry.lock ./
 RUN poetry install --no-dev
 
 # add app
-COPY . $HOME
+COPY . .
 
 # chown all the files to the app user
 RUN chown -R app:app $HOME
