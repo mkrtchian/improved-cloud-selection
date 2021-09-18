@@ -6,3 +6,5 @@ Dockerfile.prod
 
 improved_cloud_selection/htmlcov/index.html
 .coverage
+
+.mypy_cache

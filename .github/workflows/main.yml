@@ -70,10 +70,10 @@ jobs:
         run: docker exec improved-cloud-selection poetry run python -m pytest -n auto .
       - name: Flake8
         run: docker exec improved-cloud-selection poetry run python -m flake8 .
+      - name: Mypy
+        run: docker exec improved-cloud-selection poetry run python -m mypy .
       - name: Black
         run: docker exec improved-cloud-selection poetry run python -m black . --check
-      - name: isort
-        run: docker exec improved-cloud-selection poetry run python -m isort . --check-only
 
   deploy_backend:
     if: github.event_name == 'push'

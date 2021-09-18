@@ -9,7 +9,7 @@ log = logging.getLogger("uvicorn")
 
 class Settings(BaseSettings):
     environment: str = os.getenv("ENVIRONMENT", "dev")
-    testing: bool = os.getenv("TESTING", 0)
+    testing: bool = bool(os.getenv("TESTING", False))
 
 
 @lru_cache()
