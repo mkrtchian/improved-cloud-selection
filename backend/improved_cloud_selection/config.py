@@ -10,6 +10,7 @@ log = logging.getLogger("uvicorn")
 class Settings(BaseSettings):
     environment: str = os.getenv("ENVIRONMENT", "dev")
     testing: bool = bool(os.getenv("TESTING", False))
+    provider_url: str = os.getenv("PROVIDER_URL", "https://api.aiven.io")
 
 
 @lru_cache()

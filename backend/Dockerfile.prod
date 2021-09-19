@@ -18,6 +18,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV ENVIRONMENT prod
 ENV TESTING 0
+ENV FRONTEND_URL https://mkrtchian.github.io/improved-cloud-selection/
 
 # install system dependencies
 RUN apt-get update \
