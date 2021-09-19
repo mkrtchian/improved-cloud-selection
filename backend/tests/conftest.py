@@ -1,8 +1,7 @@
 import pytest
-from starlette.testclient import TestClient
-
 from improved_cloud_selection.config import Settings, get_settings
 from improved_cloud_selection.main import create_application
+from starlette.testclient import TestClient
 
 
 def get_settings_override():
