@@ -1,16 +1,21 @@
 import Head from "next/head";
 
-export const Home = (): JSX.Element => (
-  <div className="container">
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+/**
+ * Main page displaying the improved cloud selection.
+ */
+function Home(): JSX.Element {
+  return (
+    <>
+      <Head>
+        <title>Improved cloud selection</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-    <main>
-      <h1 className="title">Hello world!</h1>
-    </main>
-  </div>
-);
+      <main role="main">
+        <h1 className="title">Hello world!</h1>
+      </main>
+    </>
+  );
+}
 
 export default Home;
