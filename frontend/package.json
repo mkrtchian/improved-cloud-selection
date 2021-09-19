@@ -13,18 +13,6 @@
     "test": "jest",
     "test-all": "yarn lint && yarn type-check && yarn test"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn run type-check"
-    }
-  },
-  "lint-staged": {
-    "*.@(ts|tsx)": [
-      "yarn lint",
-      "yarn format"
-    ]
-  },
   "dependencies": {
     "next": "latest",
     "react": "^17.0.2",
@@ -43,11 +31,9 @@
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-react": "^7.19.0",
     "gh-pages": "^3.2.3",
-    "husky": "^4.2.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.4",
     "jest-watch-typeahead": "^0.6.1",
-    "lint-staged": "^10.0.10",
     "prettier": "^2.0.2",
     "typescript": "^4.1.3"
   }
