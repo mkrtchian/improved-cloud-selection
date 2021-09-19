@@ -150,7 +150,7 @@ jobs:
           CI: true
 
   deploy_frontend:
-    # if: github.event_name == 'push'
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: test_frontend
     steps:
