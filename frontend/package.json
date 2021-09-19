@@ -9,7 +9,7 @@
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write .",
     "format-check": "prettier --check .",
-    "lint": "eslint . --ext ts --ext tsx --ext js",
+    "lint": "eslint . --ext ts --ext tsx --ext js --max-warnings=0",
     "test": "jest",
     "test-all": "yarn lint && yarn type-check && yarn test"
   },
