@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+
 from improved_cloud_selection.config import Settings, get_settings
 
 router = APIRouter()
