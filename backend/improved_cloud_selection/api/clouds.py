@@ -1,5 +1,8 @@
+from datetime import timedelta
+
 import requests
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi_redis_cache import cache
 
 from improved_cloud_selection.config import Settings, get_settings
 
@@ -7,15 +10,18 @@ router = APIRouter()
 
 
 @router.get("/clouds")
+@cache(expire=timedelta(minutes=10))
 async def clouds(settings: Settings = Depends(get_settings)):
     """Clouds data for enhanced selection.
+
+    The data is queried from the provider, enriched with two fields by cloud
+    data and cached in redis to avoid overloading the provider.
 
     Args:
         settings: the main settings.
 
     Returns:
-        The data from the provider, with some additional elements like
-        cloud providers, and cloud regions.
+        The data from the provider, with cloud providers and cloud regions.
 
     Raises:
         HTTPException: in the case where the provider replies with an error.
