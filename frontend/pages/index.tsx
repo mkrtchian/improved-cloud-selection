@@ -1,13 +1,16 @@
+import { useState } from "react";
 import Head from "next/head";
 import CloudProviders from "../components/CloudProviders";
 import styles from "../styles/Home.module.css";
-import { useClouds } from "../hooks";
+import RegionsList from "../components/RegionsList";
 
 /**
  * Main page displaying the improved cloud selection.
  */
 function Home(): JSX.Element {
-  const { clouds } = useClouds();
+  const [selectedProvider, setSelectedProvider] = useState(
+    "Amazon Web Services"
+  );
   return (
     <div className={styles.container}>
       <Head>
@@ -16,9 +19,9 @@ function Home(): JSX.Element {
       </Head>
 
       <main role="main">
-        <h1 className="title">Hello world!</h1>
-        <CloudProviders />
-        {clouds.map((cloud) => cloud.cloud_region)}
+        <h1 className="title">Enhanced cloud selection</h1>
+        <CloudProviders setSelectedProvider={setSelectedProvider} />
+        <RegionsList selectedProvider={selectedProvider} />
       </main>
     </div>
   );

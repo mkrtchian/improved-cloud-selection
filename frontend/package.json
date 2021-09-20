@@ -10,8 +10,9 @@
     "format": "prettier --write .",
     "format-check": "prettier --check .",
     "lint": "eslint . --ext ts --ext tsx --ext js --max-warnings=0",
-    "test": "jest",
-    "test-all": "yarn lint && yarn type-check && yarn test"
+    "test": "jest --watch",
+    "test:ci": "jest",
+    "test-all": "yarn lint && yarn type-check && yarn test:ci"
   },
   "dependencies": {
     "axios": "^0.21.4",
