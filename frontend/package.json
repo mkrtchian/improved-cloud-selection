@@ -11,7 +11,8 @@
     "format-check": "prettier --check .",
     "lint": "eslint . --ext ts --ext tsx --ext js --max-warnings=0",
     "test": "jest --watch",
-    "test-all": "yarn lint && yarn type-check && yarn test"
+    "test:ci": "jest --watch",
+    "test-all": "yarn lint && yarn type-check && yarn test:ci"
   },
   "dependencies": {
     "axios": "^0.21.4",
