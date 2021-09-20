@@ -76,7 +76,7 @@ jobs:
         run: docker exec improved-cloud-selection poetry run python -m black . --check
 
   deploy_backend:
-    if: github.event_name == 'push'
+    #if: github.event_name == 'push'
     name: Deploy backend to Heroku
     runs-on: ubuntu-latest
     needs: [build_backend, test_backend]
