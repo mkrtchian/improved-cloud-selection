@@ -12,3 +12,7 @@ services:
     environment:
       - ENVIRONMENT=dev
       - TESTING=0
+
+  redis:
+    image: redis:6.2
+    container_name: redis

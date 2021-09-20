@@ -1,5 +1,8 @@
+from datetime import timedelta
+
 import requests
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi_redis_cache import cache
 
 from improved_cloud_selection.config import Settings, get_settings
 
@@ -7,6 +10,7 @@ router = APIRouter()
 
 
 @router.get("/clouds")
+@cache(expire=timedelta(seconds=15))
 async def clouds(settings: Settings = Depends(get_settings)):
     """Clouds data for enhanced selection.
 
