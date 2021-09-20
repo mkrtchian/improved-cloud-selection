@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "format-check": "prettier --check .",
     "lint": "eslint . --ext ts --ext tsx --ext js --max-warnings=0",
-    "test": "jest",
+    "test": "jest --watch",
     "test-all": "yarn lint && yarn type-check && yarn test"
   },
   "dependencies": {

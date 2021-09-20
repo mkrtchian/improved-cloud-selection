@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { API_PATHS } from "../constants/paths";
 import { Clouds } from "../constants/types";
 
-async function fetcher(url: string) {
+function fetcher(url: string) {
   return axios.get(url).then((res) => res.data);
 }
 
