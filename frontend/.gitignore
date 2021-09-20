@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# end to end tests
+/e2e/output
+
 # next.js
 /.next/
 /out/
