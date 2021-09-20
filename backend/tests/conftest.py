@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from starlette.testclient import TestClient
 
@@ -20,3 +22,10 @@ def test_app():
         yield test_client
 
     # tear down
+
+
+@pytest.fixture(scope="session")
+def clouds_data() -> dict:
+    with open("tests/data/clouds.json") as file:
+        clouds = json.load(file)
+    return clouds
