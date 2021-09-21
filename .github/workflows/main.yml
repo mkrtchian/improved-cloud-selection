@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  IMAGE: docker.pkg.github.com/$(echo $GITHUB_REPOSITORY | tr '[A-Z]' '[a-z]')/improved_cloud_selection
+  BACKEND_IMAGE: docker.pkg.github.com/$(echo $GITHUB_REPOSITORY | tr '[A-Z]' '[a-z]')/improved_cloud_selection
 
 jobs:
   build_backend:
@@ -22,17 +22,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull image
         run: |
-          docker pull ${{ env.IMAGE }}:latest || true
+          docker pull ${{ env.BACKEND_IMAGE }}:latest || true
       - name: Build image
         run: |
           docker build \
-            --cache-from ${{ env.IMAGE }}:latest \
-            --tag ${{ env.IMAGE }}:latest \
+            --cache-from ${{ env.BACKEND_IMAGE }}:latest \
+            --tag ${{ env.BACKEND_IMAGE }}:latest \
             --file ./backend/Dockerfile.prod \
             "./backend"
       - name: Push image
         run: |
-          docker push ${{ env.IMAGE }}:latest
+          docker push ${{ env.BACKEND_IMAGE }}:latest
 
   test_backend:
     name: Test backend with Docker image
@@ -47,33 +47,33 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull image
         run: |
-          docker pull ${{ env.IMAGE }}:latest || true
+          docker pull ${{ env.BACKEND_IMAGE }}:latest || true
       - name: Build image
         run: |
           docker build \
-            --cache-from ${{ env.IMAGE }}:latest \
-            --tag ${{ env.IMAGE }}:latest \
+            --cache-from ${{ env.BACKEND_IMAGE }}:latest \
+            --tag ${{ env.BACKEND_IMAGE }}:latest \
             --file ./backend/Dockerfile.prod \
             "./backend"
       - name: Run container
         run: |
           docker run \
             -d \
-            --name improved-cloud-selection \
-            -e PORT=8765 \
+            --name improved_cloud_selection_backend \
+            -e PORT=8001 \
             -e ENVIRONMENT=dev \
-            -p 5003:8765 \
-            ${{ env.IMAGE }}:latest
+            -p 8001:8001 \
+            ${{ env.BACKEND_IMAGE }}:latest
       - name: Install dev libs because they are not included in the production image
-        run: docker exec improved-cloud-selection poetry install
+        run: docker exec improved_cloud_selection_backend poetry install
       - name: Pytest
-        run: docker exec improved-cloud-selection poetry run python -m pytest -n auto .
+        run: docker exec improved_cloud_selection_backend poetry run python -m pytest -n auto .
       - name: Flake8
-        run: docker exec improved-cloud-selection poetry run python -m flake8 .
+        run: docker exec improved_cloud_selection_backend poetry run python -m flake8 .
       - name: Mypy
-        run: docker exec improved-cloud-selection poetry run python -m mypy .
+        run: docker exec improved_cloud_selection_backend poetry run python -m mypy .
       - name: Black
-        run: docker exec improved-cloud-selection poetry run python -m black . --check
+        run: docker exec improved_cloud_selection_backend poetry run python -m black . --check
 
   deploy_backend:
     if: github.event_name == 'push'
@@ -92,11 +92,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull image
         run: |
-          docker pull ${{ env.IMAGE }}:latest || true
+          docker pull ${{ env.BACKEND_IMAGE }}:latest || true
       - name: Build image
         run: |
           docker build \
-            --cache-from ${{ env.IMAGE }}:latest \
+            --cache-from ${{ env.BACKEND_IMAGE }}:latest \
             --tag ${{ env.HEROKU_REGISTRY_IMAGE }}:latest \
             --file ./backend/Dockerfile.prod \
             "./backend"
@@ -130,23 +130,15 @@ jobs:
       - name: Run eslint
         run: yarn lint
         working-directory: ./frontend
-        env:
-          CI: true
       - name: Run prettier
         run: yarn format-check
         working-directory: ./frontend
-        env:
-          CI: true
       - name: Run TypeScript compiler
         run: yarn type-check
         working-directory: ./frontend
-        env:
-          CI: true
       - name: Run unit tests
         run: yarn test:ci
         working-directory: ./frontend
-        env:
-          CI: true
 
   deploy_frontend:
     if: github.event_name == 'push'
@@ -169,3 +161,41 @@ jobs:
         working-directory: ./frontend
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  test_end_to_end:
+    name: Test end to end
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Install frontend dependencies
+        run: yarn install
+        working-directory: ./frontend
+      - name: Log in to GitHub Packages
+        run: echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Pull backend image
+        run: |
+          docker pull ${{ env.BACKEND_IMAGE }}:latest || true
+      - name: Build and tag pulled image
+        run: |
+          docker build \
+            --cache-from ${{ env.BACKEND_IMAGE }}:latest \
+            --tag ${{ env.BACKEND_IMAGE }}:latest \
+            --file ./backend/Dockerfile.prod \
+            "./backend"
+      - name: Run end to end tests
+        run: BACKEND_IMAGE=${{ env.BACKEND_IMAGE }} yarn e2e
+        working-directory: ./frontend
+        env:
+          CI: true
+      - name: Archive end to end screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: end-to-end-output
+          path: frontend/e2e/output/

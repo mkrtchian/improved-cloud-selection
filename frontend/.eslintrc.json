@@ -6,6 +6,7 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
+    "plugin:codeceptjs/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:@next/next/recommended"
   ],
