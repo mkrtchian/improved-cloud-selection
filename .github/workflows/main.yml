@@ -163,7 +163,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   test_end_to_end:
-    name: Test frontend
+    name: Test end to end
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -189,7 +189,7 @@ jobs:
             --file ./backend/Dockerfile.prod \
             "./backend"
       - name: Run unit tests
-        run: yarn e2e
+        run: BACKEND_IMAGE=${{ env.BACKEND_IMAGE }} yarn e2e
         working-directory: ./frontend
         env:
           CI: true
