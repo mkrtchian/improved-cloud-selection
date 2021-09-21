@@ -13,7 +13,7 @@
     "test": "jest --watch",
     "test:ci": "jest",
     "test-all": "yarn lint && yarn type-check && yarn test:ci",
-    "e2e": "npx codeceptjs run --steps"
+    "e2e": "cd e2e/config && npx codeceptjs run --steps --config ./codecept.conf.js"
   },
   "dependencies": {
     "axios": "^0.21.4",
@@ -46,6 +46,7 @@
     "playwright": "^1.14.1",
     "pm2": "^5.1.1",
     "prettier": "^2.0.2",
+    "ts-node": "^10.2.1",
     "typescript": "^4.1.3"
   }
 }

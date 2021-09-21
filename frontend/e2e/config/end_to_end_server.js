@@ -2,28 +2,50 @@ const execSync = require("child_process").execSync;
 
 module.exports = {
   start: function () {
-    const backendPath = "../backend";
-    execute(`cd ${backendPath} && docker-compose build`, true);
-    execute(
-      "NEXT_PUBLIC_BACKEND_URL=http://localhost:8000 node_modules/next/dist/bin/next build",
-      true
-    );
-    execute("node_modules/.bin/pm2 delete pm2_backend.json", false);
-    execute("node_modules/.bin/pm2 delete pm2_frontend.json", false);
-    execute("node_modules/.bin/pm2 start pm2_backend.json", false);
-    execute("node_modules/.bin/pm2 start pm2_frontend.json", true);
+    buildFrontendAndBackend();
+    stopFrontendAndBackend();
+    startFrontendAndBackend();
   },
   stop: function () {
-    execute("node_modules/.bin/pm2 stop frontend", false);
-    execute("node_modules/.bin/pm2 stop backend", true);
+    stopFrontendAndBackend();
   },
 };
 
-function execute(command, output_result = false) {
-  let output = execSync(command, {
+const frontendPath = "../..";
+const pm2Path = `node_modules/.bin/pm2`;
+const frontendName = "enhanced_cloud_selection_frontend";
+const backendPath = "../../../backend";
+
+function buildFrontendAndBackend() {
+  execute(`docker-compose -f ${backendPath}/docker-compose.prod.yml build`);
+  execute(
+    `cd ${frontendPath} NEXT_PUBLIC_BACKEND_URL=http://localhost:8001 node_modules/next/dist/bin/next build && node_modules/next/dist/bin/next export`
+  );
+}
+
+function startFrontendAndBackend() {
+  execute(
+    `docker-compose -f ${backendPath}/docker-compose.prod.yml up -d --force-recreate`
+  );
+  execute(`sleep 3`);
+  execute(
+    `cd ${frontendPath} && ${pm2Path} -f --name ${frontendName} serve out/ 3001`
+  );
+}
+
+function stopFrontendAndBackend() {
+  execute(
+    `docker-compose -f ${backendPath}/docker-compose.prod.yml down || true`
+  );
+  execute(`cd ${frontendPath} && ${pm2Path} stop ${frontendName} || true`);
+}
+
+function execute(command, outputResult = true) {
+  let options = {
     encoding: "utf-8",
-  });
-  if (output_result) {
-    console.log("__________\n", output); // eslint-disable-line no-console
+  };
+  if (outputResult) {
+    options.stdio = "inherit";
   }
+  execSync(command, options);
 }
