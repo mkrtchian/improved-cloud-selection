@@ -44,6 +44,15 @@ const axiosResponseClouds = {
         cloud_region: "Canada",
         cloud_provider: "DigitalOcean",
       },
+      {
+        cloud_description: "Asia, Singapore - DigitalOcean: Singapore",
+        cloud_name: "do-sgp",
+        geo_latitude: 1.3,
+        geo_longitude: 103.8,
+        geo_region: "southeast asia",
+        cloud_region: "Asia",
+        cloud_provider: "DigitalOcean",
+      },
     ],
   },
 } as const;
