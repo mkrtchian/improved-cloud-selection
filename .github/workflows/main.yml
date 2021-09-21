@@ -11,6 +11,7 @@ env:
 
 jobs:
   build_backend:
+    if: github.event_name == 'push'
     name: Build backend Docker image
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +36,7 @@ jobs:
           docker push ${{ env.BACKEND_IMAGE }}:latest
 
   test_backend:
+    if: github.event_name == 'push'
     name: Test backend with Docker image
     runs-on: ubuntu-latest
     needs: build_backend
@@ -116,6 +118,7 @@ jobs:
           ./backend/release.sh
 
   test_frontend:
+    if: github.event_name == 'push'
     name: Test frontend
     runs-on: ubuntu-latest
     steps:

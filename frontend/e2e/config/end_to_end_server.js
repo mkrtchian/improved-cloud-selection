@@ -19,7 +19,7 @@ const backendPath = "../../../backend";
 function buildFrontendAndBackend() {
   execute(`docker-compose -f ${backendPath}/docker-compose.prod.yml build`);
   execute(
-    `cd ${frontendPath} NEXT_PUBLIC_BACKEND_URL=http://localhost:8001 node_modules/next/dist/bin/next build && node_modules/next/dist/bin/next export`
+    `cd ${frontendPath} && NEXT_PUBLIC_BACKEND_URL=http://localhost:8001 node_modules/next/dist/bin/next build && node_modules/next/dist/bin/next export`
   );
 }
 
