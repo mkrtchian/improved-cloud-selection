@@ -20,10 +20,10 @@ def create_application() -> FastAPI:
 
 
 def add_cors_for_frontend(application: FastAPI) -> FastAPI:
-    frontend_url = os.getenv("FRONTEND_URL", LOCAL_FRONTEND_URL)
+    frontend_url = os.getenv("FRONTEND_URL", LOCAL_FRONTEND_URL).split()
     application.add_middleware(
         CORSMiddleware,
-        allow_origins=[frontend_url],
+        allow_origins=frontend_url,
         allow_methods=["GET"],
         allow_headers=["*"],
     )

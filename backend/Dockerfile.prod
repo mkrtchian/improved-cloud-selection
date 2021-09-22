@@ -18,7 +18,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV ENVIRONMENT prod
 ENV TESTING 0
-ENV FRONTEND_URL https://mkrtchian.github.io/improved-cloud-selection/
+ENV FRONTEND_URL https://mkrtchian.github.io
 ENV REDIS_URL redis://redis:6379/0
 
 # install system dependencies

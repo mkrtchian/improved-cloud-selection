@@ -1,9 +1,8 @@
 import React from "react";
 import { render } from "../testUtils";
-import { axiosGlobalMock } from "../axiosMock";
+import { axiosGlobalMock, axiosResponseClouds } from "../axiosMock";
 import Home from "../../pages/index";
 import { fireEvent } from "@testing-library/dom";
-import { act, RenderResult } from "@testing-library/react";
 
 beforeEach(() => {
   axiosGlobalMock();
@@ -13,22 +12,18 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-async function renderHome() {
-  let app: RenderResult;
-  await act(async () => {
-    app = render(<Home />);
-  });
-  return app;
+function renderHome() {
+  return render(<Home cloudsObject={axiosResponseClouds.data} />);
 }
 
-it("displays title", async () => {
-  const { getByText } = await renderHome();
+it("displays title", () => {
+  const { getByText } = renderHome();
   expect(getByText("Enhanced cloud selection")).toBeInTheDocument();
 });
 
 it(`displays the correct possible regions when a cloud provider is
-  selected`, async () => {
-  const { getByAltText, getByText, queryByText } = await renderHome();
+  selected`, () => {
+  const { getByAltText, getByText, queryByText } = renderHome();
   expect(getByText("Africa")).toBeInTheDocument();
   expect(getByText("Asia")).toBeInTheDocument();
   const digitalOcean = getByAltText("DigitalOcean");
@@ -39,9 +34,8 @@ it(`displays the correct possible regions when a cloud provider is
 });
 
 it(`displays the correct clouds when a cloud provider and a region is
-selected`, async () => {
-  const { getByAltText, getByText, queryByText, getByRole } =
-    await renderHome();
+selected`, () => {
+  const { getByAltText, getByText, queryByText, getByRole } = renderHome();
   expect(getByText("aws-af-south-1")).toBeInTheDocument();
   expect(queryByText("aws-me-south-1")).not.toBeInTheDocument();
   expect(queryByText("do-blr")).not.toBeInTheDocument();

@@ -4,8 +4,9 @@ import CloudProviders from "../components/CloudProviders";
 import styles from "../styles/Home.module.css";
 import RegionsList from "../components/RegionsList";
 import { useClouds } from "../hooks";
-import { Clouds } from "../constants/types";
+import { Clouds, CloudsObject } from "../constants/types";
 import CloudsList from "../components/CloudList";
+import { API_PATHS } from "../constants/paths";
 
 type OrganizedClouds = {
   [key: string]: {
@@ -13,15 +14,19 @@ type OrganizedClouds = {
   };
 };
 
+type HomeProps = {
+  cloudsObject: CloudsObject;
+};
+
 /**
  * Main page displaying the improved cloud selection.
  */
-function Home(): JSX.Element {
+function Home({ cloudsObject }: HomeProps): JSX.Element {
   const [selectedProvider, setSelectedProvider] = useState(
     "Amazon Web Services"
   );
   const [selectedRegion, setSelectedRegion] = useState("");
-  const { clouds } = useClouds();
+  const { clouds } = useClouds(cloudsObject);
 
   const organizedClouds = useMemo(
     function generateOrganizedClouds() {
@@ -80,6 +85,20 @@ function Home(): JSX.Element {
       </main>
     </div>
   );
+}
+
+type HomeStaticProps = {
+  props: { cloudsObject: CloudsObject };
+};
+
+export async function getStaticProps(): Promise<HomeStaticProps> {
+  const res = await fetch(API_PATHS.clouds);
+  const cloudsObject: CloudsObject = await res.json();
+  return {
+    props: {
+      cloudsObject,
+    },
+  };
 }
 
 export default Home;

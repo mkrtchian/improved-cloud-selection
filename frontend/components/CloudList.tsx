@@ -1,5 +1,7 @@
 //import styles from "./CloudList.module.css";
 import { Clouds } from "../constants/types";
+import Cloud from "./Cloud";
+import styles from "./CloudList.module.css";
 
 type CloudListProps = {
   cloudsList: Clouds;
@@ -11,9 +13,9 @@ type CloudListProps = {
 function CloudList({ cloudsList }: CloudListProps): JSX.Element {
   const sortedCloudList = cloudsList.slice().sort();
   return (
-    <ul>
+    <ul className={styles.cloudlist}>
       {sortedCloudList.map((cloud) => {
-        return <li key={cloud.cloud_name}>{cloud.cloud_name}</li>;
+        return <Cloud key={cloud.cloud_name} cloud={cloud} />;
       })}
     </ul>
   );
