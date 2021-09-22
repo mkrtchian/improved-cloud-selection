@@ -30,7 +30,7 @@ function CloudProviders({
               onClick={() => handleClickProvider(provider.name)}
             >
               <img // eslint-disable-line @next/next/no-img-element
-                src={provider.src}
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH}${provider.src}`}
                 alt={provider.name}
                 className={styles.image}
               />

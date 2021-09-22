@@ -2,9 +2,13 @@ const execSync = require("child_process").execSync;
 
 module.exports = {
   start: function () {
-    buildFrontendAndBackend();
     stopFrontendAndBackend();
-    startFrontendAndBackend();
+    buildBackend();
+    startBackend();
+    // The frontend has to be built after the backend has started because
+    // of the frontend static generation consuming the backend API
+    buildFrontend();
+    startFrontend();
   },
   stop: function () {
     stopFrontendAndBackend();
@@ -16,28 +20,33 @@ const pm2Path = `node_modules/.bin/pm2`;
 const frontendName = "enhanced_cloud_selection_frontend";
 const backendPath = "../../../backend";
 
-function buildFrontendAndBackend() {
-  execute(`docker-compose -f ${backendPath}/docker-compose.prod.yml build`);
-  execute(
-    `cd ${frontendPath} && NEXT_PUBLIC_BACKEND_URL=http://localhost:8001 node_modules/next/dist/bin/next build && node_modules/next/dist/bin/next export`
-  );
-}
-
-function startFrontendAndBackend() {
-  execute(
-    `docker-compose -f ${backendPath}/docker-compose.prod.yml up -d --force-recreate`
-  );
-  execute(`sleep 3`);
-  execute(
-    `cd ${frontendPath} && ${pm2Path} -f --name ${frontendName} serve out/ 3001`
-  );
-}
-
 function stopFrontendAndBackend() {
   execute(
     `docker-compose -f ${backendPath}/docker-compose.prod.yml down || true`
   );
   execute(`cd ${frontendPath} && ${pm2Path} stop ${frontendName} || true`);
+}
+
+function buildBackend() {
+  execute(`docker-compose -f ${backendPath}/docker-compose.prod.yml build`);
+}
+
+function startBackend() {
+  execute(
+    `docker-compose -f ${backendPath}/docker-compose.prod.yml up -d --force-recreate`
+  );
+}
+
+function buildFrontend() {
+  execute(
+    `cd ${frontendPath} && NEXT_PUBLIC_BACKEND_URL=http://localhost:8001 NEXT_PUBLIC_BASE_PATH="" node_modules/next/dist/bin/next build && node_modules/next/dist/bin/next export`
+  );
+}
+
+function startFrontend() {
+  execute(
+    `cd ${frontendPath} && ${pm2Path} -f --name ${frontendName} serve out/ 3001`
+  );
 }
 
 function execute(command, outputResult = true) {

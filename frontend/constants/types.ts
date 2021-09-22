@@ -10,4 +10,8 @@ type Cloud = {
 
 type Clouds = Cloud[];
 
-export type { Cloud, Clouds };
+type CloudsObject = {
+  clouds: Clouds;
+};
+
+export type { Cloud, Clouds, CloudsObject };

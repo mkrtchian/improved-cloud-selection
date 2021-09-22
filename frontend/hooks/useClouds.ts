@@ -1,15 +1,11 @@
 import axios from "axios";
 import useSWR from "swr";
 import { API_PATHS } from "../constants/paths";
-import { Clouds } from "../constants/types";
+import { Clouds, CloudsObject } from "../constants/types";
 
 function fetcher(url: string) {
   return axios.get(url).then((res) => res.data);
 }
-
-type CloudsObject = {
-  clouds: Clouds;
-};
 
 type UseClouds = {
   clouds: Clouds;
