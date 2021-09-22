@@ -39,7 +39,7 @@ function startBackend() {
 
 function buildFrontend() {
   execute(
-    `cd ${frontendPath} && NEXT_PUBLIC_BACKEND_URL=http://localhost:8001 node_modules/next/dist/bin/next build && node_modules/next/dist/bin/next export`
+    `cd ${frontendPath} && NEXT_PUBLIC_BACKEND_URL=http://localhost:8001 NEXT_PUBLIC_BASE_PATH="" node_modules/next/dist/bin/next build && node_modules/next/dist/bin/next export`
   );
 }
 
