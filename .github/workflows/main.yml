@@ -141,7 +141,7 @@ jobs:
         working-directory: ./frontend
 
   deploy_frontend:
-    #if: github.event_name == 'push'
+    if: github.event_name == 'push'
     name: Deploy frontend to github pages
     runs-on: ubuntu-latest
     needs: test_frontend
