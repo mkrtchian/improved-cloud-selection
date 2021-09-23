@@ -1,15 +1,31 @@
 from datetime import timedelta
+from typing import List, Optional
 
 import requests
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_redis_cache import cache
+from pydantic import BaseModel
 
 from improved_cloud_selection.config import Settings, get_settings
 
 router = APIRouter()
 
 
-@router.get("/clouds")
+class Cloud(BaseModel):
+    cloud_description: str
+    cloud_name: str
+    latitude: float
+    longitude: float
+    cloud_region: str
+    cloud_provider: str
+
+
+class CloudsResponse(BaseModel):
+    clouds: Optional[List[Cloud]]
+    detail: Optional[str]
+
+
+@router.get("/clouds", response_model=CloudsResponse)
 @cache(expire=timedelta(minutes=10))
 def clouds(settings: Settings = Depends(get_settings)):
     """Clouds data for enhanced selection.
@@ -53,7 +69,6 @@ def transform_and_add_data(clouds_data: list) -> list:
         add_cloud_provider(cloud)
         add_cloud_region(cloud)
         rename_cloud_coordinates(cloud)
-        remove_geo_region(cloud)
     return clouds_data
 
 
@@ -78,10 +93,4 @@ def add_cloud_region(cloud: dict):
 
 def rename_cloud_coordinates(cloud: dict):
     cloud["longitude"] = cloud["geo_longitude"]
-    cloud.pop("geo_longitude", None)
     cloud["latitude"] = cloud["geo_latitude"]
-    cloud.pop("geo_latitude", None)
-
-
-def remove_geo_region(cloud: dict):
-    cloud.pop("geo_region", None)

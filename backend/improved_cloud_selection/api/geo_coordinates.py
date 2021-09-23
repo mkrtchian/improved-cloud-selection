@@ -2,13 +2,19 @@ import os
 
 import requests
 from fastapi import APIRouter, Depends, HTTPException, Request
+from pydantic import BaseModel
 
 from improved_cloud_selection.config import Settings, get_settings
 
 router = APIRouter()
 
 
-@router.get("/geo-coordinates")
+class GeoCoordinates(BaseModel):
+    longitude: float
+    latitude: float
+
+
+@router.get("/geo-coordinates", response_model=GeoCoordinates)
 def geo_coordinates(request: Request, settings: Settings = Depends(get_settings)):
     """Geo coordinates of the user making the request, from his IP.
 

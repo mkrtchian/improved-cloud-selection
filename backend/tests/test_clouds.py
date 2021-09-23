@@ -46,7 +46,7 @@ def test_clouds_returns_error_when_external_services_sends_back_error_message(
     assert response["detail"] == "An unexpected error happened with our cloud provider."
 
 
-def test_clouds_returns_transformed_already_existing_data(
+def test_clouds_returns_some_of_the_already_existing_data(
     test_app, clouds_data, monkeypatch
 ):
     def mock_make_request(_: str):
@@ -76,7 +76,6 @@ def test_clouds_transformes_data_that_already_existed(
     response = test_app.get("/clouds")
     assert response.status_code == 200
     response_content = response.json()["clouds"]
-    assert len(response_content) == 102
     assert response_content[0]["latitude"] == -33.92
     assert response_content[0]["longitude"] == 18.42
     assert "geo_region" not in response_content[0]
