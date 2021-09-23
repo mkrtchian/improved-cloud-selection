@@ -1,2 +1,4 @@
 import useClouds from "./useClouds";
-export { useClouds };
+import useLocationByIP from "./useLocationByIP";
+import useOrganizedClouds from "./useOrganizedClouds";
+export { useClouds, useLocationByIP, useOrganizedClouds };

@@ -3,9 +3,17 @@ import { render } from "../testUtils";
 import RegionsList from "../../components/RegionsList";
 
 function renderRegionsList() {
-  const regionsList = ["Canada", "United States", "Europe", "Africa"];
+  const organizedRegions = {
+    Canada: [],
+    "United States": [],
+    Europe: [],
+    Africa: [],
+  };
   return render(
-    <RegionsList regionsList={regionsList} setSelectedRegion={() => null} />
+    <RegionsList
+      organizedRegions={organizedRegions}
+      setSelectedRegion={() => null}
+    />
   );
 }
 

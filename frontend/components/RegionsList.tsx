@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import styles from "./RegionsList.module.css";
+import { Clouds } from "../constants/types";
 
 type RegionsListProps = {
-  regionsList: string[];
+  organizedRegions: { [key: string]: Clouds };
   setSelectedRegion: (selectedProvider: string) => void;
 };
 
@@ -10,17 +11,23 @@ type RegionsListProps = {
  * List the possible places according to the cloud provider selected.
  */
 function RegionsList({
-  regionsList,
+  organizedRegions,
   setSelectedRegion,
 }: RegionsListProps): JSX.Element {
-  const sortedRegionsList = regionsList.slice().sort();
+  const sortedRegionsList = useMemo(
+    function generateRegionsList() {
+      const regionsList = Object.keys(organizedRegions);
+      return regionsList.slice().sort();
+    },
+    [organizedRegions]
+  );
   useEffect(
     function setInitialSelectedRegion() {
-      if (regionsList && regionsList.length > 0) {
-        setSelectedRegion(regionsList[0]);
+      if (sortedRegionsList && sortedRegionsList.length > 0) {
+        setSelectedRegion(sortedRegionsList[0]);
       }
     },
-    [regionsList]
+    [sortedRegionsList]
   );
   function handleClickRegion(regionName: string) {
     setSelectedRegion(regionName);

@@ -1,5 +1,3 @@
-import json
-
 import pytest
 from starlette.testclient import TestClient
 
@@ -24,8 +22,10 @@ def test_app():
     # tear down
 
 
-@pytest.fixture(scope="session")
-def clouds_data() -> dict:
-    with open("tests/data/clouds.json") as file:
-        clouds = json.load(file)
-    return clouds
+class ResponseMock:
+    def __init__(self, status_code, data):
+        self.status_code = status_code
+        self.data = data
+
+    def json(self):
+        return self.data

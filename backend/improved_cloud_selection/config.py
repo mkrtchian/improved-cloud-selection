@@ -10,7 +10,10 @@ log = logging.getLogger("uvicorn")
 class Settings(BaseSettings):
     environment: str = os.getenv("ENVIRONMENT", "dev")
     testing: bool = bool(os.getenv("TESTING", False))
-    provider_url: str = os.getenv("PROVIDER_URL", "https://api.aiven.io")
+    cloud_provider_url: str = os.getenv("CLOUD_PROVIDER_URL", "https://api.aiven.io")
+    geo_ip_provider_url: str = os.getenv(
+        "GEO_IP_PROVIDER_URL", "https://geolocation-db.com/json"
+    )
 
 
 @lru_cache()
