@@ -13,11 +13,12 @@ function renderRegionsList() {
     <RegionsList
       organizedRegions={organizedRegions}
       setSelectedRegion={() => null}
+      selectedRegion="Europe"
     />
   );
 }
 
-it("displays title", () => {
+it("displays regions sorted alphabetically", () => {
   const { getAllByRole } = renderRegionsList();
   const regions = getAllByRole("button");
   expect(regions[0].textContent).toBe("Africa");

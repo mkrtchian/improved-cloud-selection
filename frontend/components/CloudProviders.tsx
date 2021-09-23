@@ -2,6 +2,7 @@ import styles from "./CloudProviders.module.css";
 
 type CloudProvidersProps = {
   setSelectedProvider: (selectedProvider: string) => void;
+  selectedProvider: string;
 };
 
 /**
@@ -9,6 +10,7 @@ type CloudProvidersProps = {
  */
 function CloudProviders({
   setSelectedProvider,
+  selectedProvider,
 }: CloudProvidersProps): JSX.Element {
   const cloudProviders = [
     { name: "Amazon Web Services", src: "/images/aws_logo.svg" },
@@ -24,7 +26,12 @@ function CloudProviders({
     <ul className={styles.list}>
       {cloudProviders.map((provider) => {
         return (
-          <li key={provider.name}>
+          <li
+            key={provider.name}
+            aria-current={
+              selectedProvider === provider.name ? "location" : undefined
+            }
+          >
             <button
               className={styles.button}
               onClick={() => handleClickProvider(provider.name)}

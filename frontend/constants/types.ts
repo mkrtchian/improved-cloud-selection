@@ -23,6 +23,10 @@ type GeoPositionResponse = {
   data: GeoPosition;
 };
 
+type EmptyResponse = {
+  data: Record<string, never>;
+};
+
 // inspired from: https://stackoverflow.com/a/62628684/1774332
 function isGeoPositionResponse(
   response: unknown
@@ -39,5 +43,12 @@ function isGeoPositionResponse(
   );
 }
 
-export type { Cloud, Clouds, CloudsObject, GeoPosition };
+export type {
+  Cloud,
+  Clouds,
+  CloudsObject,
+  GeoPosition,
+  GeoPositionResponse,
+  EmptyResponse,
+};
 export { isGeoPositionResponse };

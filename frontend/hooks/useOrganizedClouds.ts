@@ -29,26 +29,36 @@ function useOrganizedClouds(
   return useMemo(
     function generateOrganizedClouds() {
       const structuredClouds: OrganizedClouds = {};
-      for (const cloud of clouds) {
-        if (!(cloud.cloud_provider in structuredClouds)) {
-          structuredClouds[cloud.cloud_provider] = {};
-        }
-        if (!(cloud.cloud_region in structuredClouds[cloud.cloud_provider])) {
-          structuredClouds[cloud.cloud_provider][cloud.cloud_region] = [];
-        }
-        structuredClouds[cloud.cloud_provider][cloud.cloud_region].push(cloud);
-      }
 
-      if (location) {
-        for (const provider in structuredClouds) {
-          for (const region in structuredClouds[provider]) {
-            structuredClouds[provider][region] = orderByDistance(
-              location,
-              structuredClouds[provider][region]
-            ) as Clouds;
+      function buildStructuredClouds() {
+        for (const cloud of clouds) {
+          if (!(cloud.cloud_provider in structuredClouds)) {
+            structuredClouds[cloud.cloud_provider] = {};
+          }
+          if (!(cloud.cloud_region in structuredClouds[cloud.cloud_provider])) {
+            structuredClouds[cloud.cloud_provider][cloud.cloud_region] = [];
+          }
+          structuredClouds[cloud.cloud_provider][cloud.cloud_region].push(
+            cloud
+          );
+        }
+      }
+      buildStructuredClouds();
+
+      function sortStructuredClouds() {
+        if (location) {
+          for (const provider in structuredClouds) {
+            for (const region in structuredClouds[provider]) {
+              structuredClouds[provider][region] = orderByDistance(
+                location,
+                structuredClouds[provider][region]
+              ) as Clouds;
+            }
           }
         }
       }
+      sortStructuredClouds();
+
       return structuredClouds;
     },
     [clouds, location]

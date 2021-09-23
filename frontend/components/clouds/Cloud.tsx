@@ -1,4 +1,4 @@
-import { Cloud as CloudType } from "../constants/types";
+import { Cloud as CloudType } from "../../constants/types";
 import styles from "./Cloud.module.css";
 
 type CloudProps = {
@@ -11,7 +11,7 @@ type CloudProps = {
 function Cloud({ cloud }: CloudProps): JSX.Element {
   return (
     <li key={cloud.cloud_name} className={styles.cloud}>
-      <div>{cloud.cloud_name}</div>
+      <div data-testid="cloud-name">{cloud.cloud_name}</div>
       <div>{cloud.cloud_description}</div>
     </li>
   );

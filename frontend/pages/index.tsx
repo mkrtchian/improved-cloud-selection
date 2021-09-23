@@ -5,7 +5,7 @@ import styles from "../styles/Home.module.css";
 import RegionsList from "../components/RegionsList";
 import { useOrganizedClouds, useLocationByIP } from "../hooks";
 import { CloudsObject, GeoPosition } from "../constants/types";
-import CloudsList from "../components/CloudList";
+import CloudsContainer from "../components/clouds/CloudsContainer";
 import { API_PATHS } from "../constants/paths";
 
 type HomeProps = {
@@ -36,16 +36,22 @@ function Home({ cloudsObject }: HomeProps): JSX.Element {
 
       <main role="main">
         <h1 className="title">Enhanced cloud selection</h1>
-        <CloudProviders setSelectedProvider={setSelectedProvider} />
+        <CloudProviders
+          setSelectedProvider={setSelectedProvider}
+          selectedProvider={selectedProvider}
+        />
         {selectedProviderExists && (
           <>
             <RegionsList
               organizedRegions={organizedClouds[selectedProvider]}
               setSelectedRegion={setSelectedRegion}
+              selectedRegion={selectedRegion}
+              userLocation={locationByIP}
             />
             {selectedRegionExists && (
-              <CloudsList
-                cloudsList={organizedClouds[selectedProvider][selectedRegion]}
+              <CloudsContainer
+                cloudList={organizedClouds[selectedProvider][selectedRegion]}
+                userLocation={locationByIP}
               />
             )}
           </>

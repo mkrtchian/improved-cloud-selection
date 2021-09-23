@@ -1,12 +1,22 @@
 import { API_PATHS } from "../constants/paths";
 import axios from "axios";
-import { CloudsObject, GeoPosition } from "../constants/types";
+import {
+  CloudsObject,
+  GeoPositionResponse,
+  EmptyResponse,
+} from "../constants/types";
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 export let axiosResponseClouds: { data: CloudsObject };
-export let axiosResponseLocationByIp: GeoPosition;
+let axiosResponseLocationByIp: GeoPositionResponse | EmptyResponse;
+
+export function setAxiosResponseLocationByIp(
+  data: GeoPositionResponse | EmptyResponse
+): void {
+  axiosResponseLocationByIp = data;
+}
 
 /**
  * Mocks all the backend API called with axios with realistic data.
@@ -57,6 +67,14 @@ export function axiosGlobalMock(): void {
           cloud_provider: "DigitalOcean",
         },
         {
+          cloud_description: "Canada, Quebec - Google Cloud: Montr\u00e9al",
+          cloud_name: "google-northamerica-northeast1",
+          latitude: 45.5,
+          longitude: -73.57,
+          cloud_region: "Canada",
+          cloud_provider: "Google Cloud Platform",
+        },
+        {
           cloud_description: "Australia, Victoria - Google Cloud: Melbourne",
           cloud_name: "google-australia-southeast2",
           latitude: -37.815,
@@ -68,9 +86,11 @@ export function axiosGlobalMock(): void {
     },
   };
   axiosResponseLocationByIp = {
-    longitude: 100.05,
-    latitude: 1.36,
-    other_prop: "blabla",
+    data: {
+      longitude: 1.29,
+      latitude: 45.33,
+      other_prop: "blabla",
+    },
   };
   mockAxiosGet();
 }

@@ -1,4 +1,4 @@
-import logging
+import os
 
 import requests
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -6,8 +6,6 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from improved_cloud_selection.config import Settings, get_settings
 
 router = APIRouter()
-
-log = logging.getLogger("uvicorn")
 
 
 @router.get("/geo-coordinates")
@@ -25,7 +23,8 @@ def geo_coordinates(request: Request, settings: Settings = Depends(get_settings)
         HTTPException: in the case where the provider replies with an error.
 
     """  # noqa: DAR402
-    response = make_request(f"{settings.geo_ip_provider_url}/{request.client.host}")
+    user_ip = os.getenv("OVERRIDE_USER_IP", request.client.host)
+    response = make_request(f"{settings.geo_ip_provider_url}/{user_ip}")
     check_response_status(response)
     geo_data = response.json()
     result_data = {}
