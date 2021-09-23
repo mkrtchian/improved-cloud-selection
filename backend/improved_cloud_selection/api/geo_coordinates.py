@@ -31,8 +31,6 @@ def geo_coordinates(request: Request, settings: Settings = Depends(get_settings)
     result_data = {}
     result_data["longitude"] = geo_data["longitude"]
     result_data["latitude"] = geo_data["latitude"]
-    result_data["ip"] = request.client.host
-    result_data["headers"] = request.headers
     return result_data
 
 
