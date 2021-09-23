@@ -7,6 +7,7 @@ import { useOrganizedClouds, useLocationByIP } from "../hooks";
 import { CloudsObject, GeoPosition } from "../constants/types";
 import CloudsContainer from "../components/clouds/CloudsContainer";
 import { API_PATHS } from "../constants/paths";
+import NavigatorLocationButton from "../components/NavigatorLocationButton";
 
 type HomeProps = {
   cloudsObject: CloudsObject;
@@ -20,9 +21,9 @@ function Home({ cloudsObject }: HomeProps): JSX.Element {
     "Google Cloud Platform"
   );
   const [selectedRegion, setSelectedRegion] = useState("Europe");
-  const [locationByIP, setLocationByIP] = useState<GeoPosition>();
-  useLocationByIP(setLocationByIP);
-  const organizedClouds = useOrganizedClouds(cloudsObject, locationByIP);
+  const [userLocation, setUserLocation] = useState<GeoPosition>();
+  useLocationByIP(setUserLocation);
+  const organizedClouds = useOrganizedClouds(cloudsObject, userLocation);
 
   const selectedProviderExists = selectedProvider in organizedClouds;
   const selectedRegionExists =
@@ -36,6 +37,7 @@ function Home({ cloudsObject }: HomeProps): JSX.Element {
 
       <main role="main">
         <h1 className="title">Enhanced cloud selection</h1>
+        <NavigatorLocationButton setUserLocation={setUserLocation} />
         <CloudProviders
           setSelectedProvider={setSelectedProvider}
           selectedProvider={selectedProvider}
@@ -46,12 +48,12 @@ function Home({ cloudsObject }: HomeProps): JSX.Element {
               organizedRegions={organizedClouds[selectedProvider]}
               setSelectedRegion={setSelectedRegion}
               selectedRegion={selectedRegion}
-              userLocation={locationByIP}
+              userLocation={userLocation}
             />
             {selectedRegionExists && (
               <CloudsContainer
                 cloudList={organizedClouds[selectedProvider][selectedRegion]}
-                userLocation={locationByIP}
+                userLocation={userLocation}
               />
             )}
           </>

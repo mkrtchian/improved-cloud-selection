@@ -5,6 +5,7 @@ import {
   axiosResponseClouds,
   setAxiosResponseLocationByIp,
 } from "../axiosMock";
+import { mockNavigatorGeolocation, NavigatorPosition } from "../navigatorMock";
 import Home from "../../pages/index";
 import { fireEvent } from "@testing-library/dom";
 import { act, RenderResult } from "@testing-library/react";
@@ -32,8 +33,8 @@ it(`displays the correct possible regions when a cloud provider is
   expect(queryByText("Asia")).not.toBeInTheDocument();
   expect(getByText("Canada")).toBeInTheDocument();
   expect(queryByText("Africa")).not.toBeInTheDocument();
-  const digitalOcean = getByAltText("DigitalOcean");
-  fireEvent.click(digitalOcean);
+
+  fireEvent.click(getByAltText("DigitalOcean"));
   expect(getByText("Asia")).toBeInTheDocument();
   expect(getByText("Canada")).toBeInTheDocument();
   expect(queryByText("Africa")).not.toBeInTheDocument();
@@ -50,14 +51,15 @@ describe("With the user location known", () => {
     let clouds = getAllByTestId("cloud-name");
     expect(clouds[0].textContent).toBe("google-australia-southeast2");
     expect(clouds).toHaveLength(1);
-    const digitalOcean = getByAltText("DigitalOcean");
-    fireEvent.click(digitalOcean);
+
+    fireEvent.click(getByAltText("DigitalOcean"));
     const asia = getByRole("button", { name: "Asia" });
     fireEvent.click(asia);
     clouds = getAllByTestId("cloud-name");
     expect(clouds[0].textContent).toBe("do-sgp");
     expect(clouds[1].textContent).toBe("do-blr");
     expect(clouds).toHaveLength(2);
+
     const canada = getByRole("button", { name: "Canada" });
     fireEvent.click(canada);
     clouds = getAllByTestId("cloud-name");
@@ -72,6 +74,7 @@ describe("With the user location known", () => {
     const australia = getByRole("button", { name: "Australia" }).closest("li");
     expect(canada).toHaveAttribute("aria-current", "location");
     expect(australia).not.toHaveAttribute("aria-current");
+
     fireEvent.click(getByAltText("DigitalOcean"));
     const asia = getByRole("button", { name: "Asia" }).closest("li");
     canada = getByRole("button", { name: "Canada" }).closest("li");
@@ -91,8 +94,8 @@ describe("With the user location unknown", () => {
     let clouds = getAllByTestId("cloud-name");
     expect(clouds[0].textContent).toBe("google-australia-southeast2");
     expect(clouds).toHaveLength(1);
-    const digitalOcean = getByAltText("DigitalOcean");
-    fireEvent.click(digitalOcean);
+
+    fireEvent.click(getByAltText("DigitalOcean"));
     const asia = getByRole("button", { name: "Asia" });
     fireEvent.click(asia);
     clouds = getAllByTestId("cloud-name");
@@ -100,6 +103,7 @@ describe("With the user location unknown", () => {
     expect(clouds[1].textContent).toBe("do-sgp");
     expect(clouds).toHaveLength(2);
     const canada = getByRole("button", { name: "Canada" });
+
     fireEvent.click(canada);
     clouds = getAllByTestId("cloud-name");
     expect(clouds[0].textContent).toBe("do-tor");
@@ -113,10 +117,42 @@ describe("With the user location unknown", () => {
     const australia = getByRole("button", { name: "Australia" }).closest("li");
     expect(australia).toHaveAttribute("aria-current", "location");
     expect(canada).not.toHaveAttribute("aria-current");
+
     fireEvent.click(getByAltText("DigitalOcean"));
     const asia = getByRole("button", { name: "Asia" }).closest("li");
     canada = getByRole("button", { name: "Canada" }).closest("li");
     expect(asia).toHaveAttribute("aria-current", "location");
     expect(canada).not.toHaveAttribute("aria-current", "location");
   });
+});
+
+it(`displays clouds according to the new more precise user geo location, when
+the user clicks on the navigator geo location button`, async () => {
+  const { getCurrentPositionMock } = mockNavigatorGeolocation();
+  getCurrentPositionMock.mockImplementation(
+    (callback: (position: NavigatorPosition) => void) => {
+      callback({
+        coords: {
+          longitude: 100.05,
+          latitude: 1.36,
+        },
+      });
+    }
+  );
+
+  const { getByAltText, getByRole, getAllByTestId, getByText } =
+    await renderHome();
+  fireEvent.click(getByAltText("DigitalOcean"));
+  const asia = getByRole("button", { name: "Asia" });
+  fireEvent.click(asia);
+  let clouds = getAllByTestId("cloud-name");
+  expect(clouds[0].textContent).toBe("do-blr");
+  expect(clouds[1].textContent).toBe("do-sgp");
+  expect(clouds).toHaveLength(2);
+
+  fireEvent.click(getByText("Get more precise distance results"));
+  clouds = getAllByTestId("cloud-name");
+  expect(clouds[0].textContent).toBe("do-sgp");
+  expect(clouds[1].textContent).toBe("do-blr");
+  expect(clouds).toHaveLength(2);
 });
