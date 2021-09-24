@@ -14,6 +14,6 @@ Scenario("Load page and see clouds while clicking on regions", ({ I }) => {
   I.see("Europe, England - Amazon Web Services: London");
   I.dontSee("Canada, Ontario - Google Cloud: Toronto");
   I.dontSee("Asia, Korea - Google Cloud: Seoul");
-});
+}).retry(1);
 
 export {};
