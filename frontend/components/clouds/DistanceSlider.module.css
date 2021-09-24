@@ -1,0 +1,19 @@
+.sliderContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0.6rem 2rem 0.3rem;
+}
+
+.sliderInput {
+  max-width: 450px;
+}
+
+.sliderLabel {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.sliderDistance {
+  font-size: 0.8rem;
+  padding-left: 0.2rem;
+}

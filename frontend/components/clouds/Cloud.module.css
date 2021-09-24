@@ -1,7 +1,26 @@
 .cloud {
-  box-shadow: 4px 4px 4px -1px rgba(0, 0, 0, 0.15),
-    0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.15),
+    0px 0px 3px 0px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   padding: 1rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.cloudName {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.cloudDescription {
+  font-size: 12px;
+}
+
+@media (min-width: 1000px) {
+  .cloudName {
+    margin-bottom: 0.8rem;
+  }
+  .cloud {
+    padding: 1.3rem;
+  }
 }

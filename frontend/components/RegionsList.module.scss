@@ -1,0 +1,46 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  padding: 0.3rem 0;
+  margin-top: 1.3rem;
+  margin-bottom: 0.5rem;
+  gap: 1.5rem;
+}
+
+.button {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  width: 100%;
+  border-bottom: 1px solid #c7c7c7;
+  padding-bottom: calc(0.3rem + 1px);
+  text-align: left;
+
+  &:hover,
+  &:focus,
+  &.selected {
+    color: #e41a4a;
+    font-weight: 500;
+    border-bottom: 2px solid #e41a4a;
+    padding-bottom: 0.3rem;
+  }
+}
+
+@media (min-width: 700px) {
+  .list {
+    flex-direction: row;
+  }
+  .button {
+    font-size: 1.15rem;
+  }
+  .list {
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: 1000px) {
+  .list {
+    gap: 1.2rem;
+  }
+}

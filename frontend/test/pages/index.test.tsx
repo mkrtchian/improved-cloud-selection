@@ -150,7 +150,7 @@ the user clicks on the navigator geo location button`, async () => {
   expect(clouds[1].textContent).toBe("do-sgp");
   expect(clouds).toHaveLength(2);
 
-  fireEvent.click(getByText("Get more precise distance results"));
+  fireEvent.click(getByText("More precise results"));
   clouds = getAllByTestId("cloud-name");
   expect(clouds[0].textContent).toBe("do-sgp");
   expect(clouds[1].textContent).toBe("do-blr");

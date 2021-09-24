@@ -1,5 +1,5 @@
 import { useMemo, useEffect } from "react";
-import styles from "./RegionsList.module.css";
+import styles from "./RegionsList.module.scss";
 import { Clouds, GeoPosition } from "../constants/types";
 import { getDistance } from "geolib";
 
@@ -69,12 +69,19 @@ function RegionsList({
   return (
     <ul className={styles.list}>
       {sortedRegionsList.map((region) => {
+        const selected = selectedRegion === region;
         return (
           <li
             key={region}
-            aria-current={selectedRegion === region ? "location" : undefined}
+            aria-current={selected ? "location" : undefined}
+            className={`${styles.items} ${selected ? styles.selected : ""}`}
           >
-            <button onClick={() => handleClickRegion(region)}>{region}</button>
+            <button
+              className={`${styles.button} ${selected ? styles.selected : ""}`}
+              onClick={() => handleClickRegion(region)}
+            >
+              {region}
+            </button>
           </li>
         );
       })}
