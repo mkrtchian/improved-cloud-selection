@@ -5,6 +5,10 @@ body {
   font-family: Montserrat, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+body {
+  overflow-y: scroll;
+}
+
 a {
   color: inherit;
   text-decoration: none;

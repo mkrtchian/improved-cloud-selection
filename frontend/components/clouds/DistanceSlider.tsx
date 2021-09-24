@@ -1,5 +1,6 @@
 import { useState, ChangeEvent } from "react";
 import { MAX_DISTANCE } from "../../constants/values";
+import styles from "./DistanceSlider.module.css";
 
 type DistanceSliderProps = {
   setMinimalDistance: (distance: number) => void;
@@ -18,21 +19,22 @@ function DistanceSlider({
     setMinimalDistance(value);
   }
   return (
-    <>
-      <label htmlFor="distance-limit">
-        Select maximal distance between you and the cloud instances
+    <div className={styles.sliderContainer}>
+      <label htmlFor="distance-limit" className={styles.sliderLabel}>
+        Select maximal distance between you and the cloud instances:
       </label>
       <input
         type="range"
+        className={styles.sliderInput}
         min="1"
-        max="20000"
+        max={MAX_DISTANCE + 100}
         value={distanceLimit}
         step="100"
         id="distance-limit"
         onChange={handleRangeChange}
       />
-      {distanceLimit} km
-    </>
+      <span className={styles.sliderDistance}>{distanceLimit} km</span>
+    </div>
   );
 }
 

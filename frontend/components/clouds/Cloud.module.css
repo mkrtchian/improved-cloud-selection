@@ -15,3 +15,12 @@
 .cloudDescription {
   font-size: 12px;
 }
+
+@media (min-width: 1000px) {
+  .cloudName {
+    margin-bottom: 0.8rem;
+  }
+  .cloud {
+    padding: 1.3rem;
+  }
+}

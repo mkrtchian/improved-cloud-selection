@@ -35,7 +35,7 @@ function Home({ cloudsObject }: HomeProps): JSX.Element {
         <title>Improved cloud selection</title>
       </Head>
 
-      <main role="main">
+      <main role="main" className={styles.main}>
         <h1 className={styles.title}>Enhanced cloud selection</h1>
         <NavigatorLocationButton setUserLocation={setUserLocation} />
         <CloudProviders
