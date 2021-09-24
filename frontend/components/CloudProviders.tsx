@@ -31,6 +31,7 @@ function CloudProviders({
             aria-current={
               selectedProvider === provider.name ? "location" : undefined
             }
+            className={styles.items}
           >
             <button
               className={styles.button}
@@ -41,7 +42,6 @@ function CloudProviders({
                 alt={provider.name}
                 className={styles.image}
               />
-              <span className={styles.name}>{provider.name}</span>
             </button>
           </li>
         );

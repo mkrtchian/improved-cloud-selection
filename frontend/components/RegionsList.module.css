@@ -1,4 +1,19 @@
 .list {
   display: flex;
   flex-direction: column;
+  padding: 0.3rem;
+  margin-top: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.items {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #c7c7c7;
+  padding-bottom: 0.3rem;
+}
+
+.buttons {
+  background: none;
+  border: none;
+  font-size: 20px;
 }

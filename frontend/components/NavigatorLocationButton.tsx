@@ -1,5 +1,6 @@
 import { GeoPosition } from "../constants/types";
 import { useNavigatorLocation } from "../hooks";
+import styles from "./NavigatorLocationButton.module.css";
 
 type NavigatorLocationButtonProps = {
   setUserLocation: (locationValue: GeoPosition) => void;
@@ -15,8 +16,8 @@ function NavigatorLocationButton({
   const callNavigatorGeoLocation = useNavigatorLocation(setUserLocation);
   return (
     <>
-      <button onClick={callNavigatorGeoLocation}>
-        Get more precise distance results
+      <button className={styles.button} onClick={callNavigatorGeoLocation}>
+        More precise distance results
       </button>
     </>
   );

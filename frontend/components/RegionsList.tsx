@@ -73,8 +73,14 @@ function RegionsList({
           <li
             key={region}
             aria-current={selectedRegion === region ? "location" : undefined}
+            className={styles.items}
           >
-            <button onClick={() => handleClickRegion(region)}>{region}</button>
+            <button
+              className={styles.buttons}
+              onClick={() => handleClickRegion(region)}
+            >
+              {region}
+            </button>
           </li>
         );
       })}
