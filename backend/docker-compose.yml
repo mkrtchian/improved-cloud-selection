@@ -12,6 +12,10 @@ services:
     environment:
       - ENVIRONMENT=dev
       - TESTING=0
+      # The IP address of Elysee in Paris
+      # This is needed because the backend can't have access to the
+      # remote IP address while being sent requests from localhost
+      - OVERRIDE_USER_IP=194.5.172.19
 
   redis:
     image: redis:6.2

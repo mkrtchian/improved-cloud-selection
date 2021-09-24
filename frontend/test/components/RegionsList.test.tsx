@@ -3,13 +3,22 @@ import { render } from "../testUtils";
 import RegionsList from "../../components/RegionsList";
 
 function renderRegionsList() {
-  const regionsList = ["Canada", "United States", "Europe", "Africa"];
+  const organizedRegions = {
+    Canada: [],
+    "United States": [],
+    Europe: [],
+    Africa: [],
+  };
   return render(
-    <RegionsList regionsList={regionsList} setSelectedRegion={() => null} />
+    <RegionsList
+      organizedRegions={organizedRegions}
+      setSelectedRegion={() => null}
+      selectedRegion="Europe"
+    />
   );
 }
 
-it("displays title", () => {
+it("displays regions sorted alphabetically", () => {
   const { getAllByRole } = renderRegionsList();
   const regions = getAllByRole("button");
   expect(regions[0].textContent).toBe("Africa");

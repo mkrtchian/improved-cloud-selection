@@ -18,6 +18,10 @@ services:
       - PORT=8000
       - REDIS_URL=redis://redis:6380
       - FRONTEND_URL=http://localhost:3001
+      # The IP address of Elysee in Paris
+      # This is needed because the backend can't have access to the
+      # remote IP address while being sent requests from localhost
+      - OVERRIDE_USER_IP=194.5.172.19
 
   redis:
     image: redis:6.2

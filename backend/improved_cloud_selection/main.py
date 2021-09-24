@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_redis_cache import FastApiRedisCache
 
-from improved_cloud_selection.api import clouds
+from improved_cloud_selection.api import clouds, geo_coordinates
 
 LOCAL_FRONTEND_URL = "http://localhost:3000"
 LOCAL_REDIS_URL = "redis://redis:6379/0"
@@ -15,6 +15,7 @@ def create_application() -> FastAPI:
         title="Improved cloud selection", docs_url=None, redoc_url="/docs"
     )
     application.include_router(clouds.router)
+    application.include_router(geo_coordinates.router)
     application = add_cors_for_frontend(application)
     return application
 

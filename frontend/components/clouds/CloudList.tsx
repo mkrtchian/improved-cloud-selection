@@ -1,17 +1,22 @@
-//import styles from "./CloudList.module.css";
-import { Clouds } from "../constants/types";
+import { useMemo } from "react";
+import { Clouds } from "../../constants/types";
 import Cloud from "./Cloud";
 import styles from "./CloudList.module.css";
 
 type CloudListProps = {
-  cloudsList: Clouds;
+  cloudList: Clouds;
 };
 
 /**
  * List the possible places according to the cloud provider selected.
  */
-function CloudList({ cloudsList }: CloudListProps): JSX.Element {
-  const sortedCloudList = cloudsList.slice().sort();
+function CloudList({ cloudList }: CloudListProps): JSX.Element {
+  const sortedCloudList = useMemo(
+    function generateCloudsList() {
+      return cloudList.slice().sort();
+    },
+    [cloudList]
+  );
   return (
     <ul className={styles.cloudlist}>
       {sortedCloudList.map((cloud) => {
