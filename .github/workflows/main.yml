@@ -11,6 +11,7 @@ env:
 
 jobs:
   build_backend:
+    if: github.actor!= 'depbot'
     name: Build backend Docker image
     runs-on: ubuntu-latest
     steps:
