@@ -1,7 +1,7 @@
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import styles from "./RegionsList.module.scss";
 import { Clouds, GeoPosition } from "../constants/types";
-import { getDistance } from "geolib";
+import { useSetInitialRegion } from "../hooks";
 
 type RegionsListProps = {
   organizedRegions: { [regionName: string]: Clouds };
@@ -26,43 +26,12 @@ function RegionsList({
     },
     [organizedRegions]
   );
-  useEffect(
-    function setInitialSelectedRegion() {
-      const atLeastOneRegion = sortedRegionsList.length;
-      if (atLeastOneRegion) {
-        const nearestRegion = getRegionWithNearestCloud(sortedRegionsList[0]);
-        setSelectedRegion(nearestRegion);
-      }
-      function getRegionWithNearestCloud(fallbackRegion: string): string {
-        let currentRegion = fallbackRegion;
-        let currentRegionCloud = organizedRegions[currentRegion][0];
-        if (userLocation) {
-          let userToCurrentRegion = getDistance(
-            userLocation,
-            currentRegionCloud
-          );
-          for (const [regionCandidate, regionCandidateClouds] of Object.entries(
-            organizedRegions
-          )) {
-            const userToRegionCandidate = getDistance(
-              userLocation,
-              regionCandidateClouds[0]
-            );
-            if (userToRegionCandidate < userToCurrentRegion) {
-              currentRegion = regionCandidate;
-              currentRegionCloud = regionCandidateClouds[0];
-              userToCurrentRegion = getDistance(
-                userLocation,
-                currentRegionCloud
-              );
-            }
-          }
-        }
-        return currentRegion;
-      }
-    },
-    [sortedRegionsList]
-  );
+  useSetInitialRegion({
+    defaultRegion: sortedRegionsList && sortedRegionsList[0],
+    organizedRegions,
+    setSelectedRegion,
+    userLocation,
+  });
   function handleClickRegion(regionName: string): void {
     setSelectedRegion(regionName);
   }
