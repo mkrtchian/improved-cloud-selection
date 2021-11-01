@@ -1,13 +1,12 @@
 import { useMemo } from "react";
-import { CloudsObject, GeoPosition, Clouds } from "../constants/types";
+import {
+  CloudsObject,
+  GeoPosition,
+  Clouds,
+  OrganizedClouds,
+} from "../constants/types";
 import { orderByDistance } from "geolib";
 import { useClouds } from "./";
-
-type OrganizedClouds = {
-  [provider: string]: {
-    [region: string]: Clouds;
-  };
-};
 
 /**
  * Gets the clouds from the backend and builds a structured object to access

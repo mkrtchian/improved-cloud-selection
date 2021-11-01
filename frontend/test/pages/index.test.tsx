@@ -81,6 +81,29 @@ describe("With the user location known", () => {
     expect(canada).toHaveAttribute("aria-current", "location");
     expect(asia).not.toHaveAttribute("aria-current", "location");
   });
+
+  it(`selects the provider with the nearest cloud after the first
+  render`, async () => {
+    const { getByRole } = await renderHome();
+    const aws = getByRole("button", { name: "Amazon Web Services" }).closest(
+      "li"
+    );
+    const gcp = getByRole("button", { name: "Google Cloud Platform" }).closest(
+      "li"
+    );
+    const azure = getByRole("button", { name: "Microsoft Azure" }).closest(
+      "li"
+    );
+    const digitalOcean = getByRole("button", { name: "DigitalOcean" }).closest(
+      "li"
+    );
+    const upCloud = getByRole("button", { name: "UpCloud" }).closest("li");
+    expect(aws).toHaveAttribute("aria-current", "location");
+    expect(gcp).not.toHaveAttribute("aria-current");
+    expect(azure).not.toHaveAttribute("aria-current");
+    expect(digitalOcean).not.toHaveAttribute("aria-current");
+    expect(upCloud).not.toHaveAttribute("aria-current");
+  });
 });
 
 describe("With the user location unknown", () => {
@@ -123,6 +146,28 @@ describe("With the user location unknown", () => {
     canada = getByRole("button", { name: "Canada" }).closest("li");
     expect(asia).toHaveAttribute("aria-current", "location");
     expect(canada).not.toHaveAttribute("aria-current", "location");
+  });
+
+  it(`selects Google Cloud Platform after the first render`, async () => {
+    const { getByRole } = await renderHome();
+    const aws = getByRole("button", { name: "Amazon Web Services" }).closest(
+      "li"
+    );
+    const gcp = getByRole("button", { name: "Google Cloud Platform" }).closest(
+      "li"
+    );
+    const azure = getByRole("button", { name: "Microsoft Azure" }).closest(
+      "li"
+    );
+    const digitalOcean = getByRole("button", { name: "DigitalOcean" }).closest(
+      "li"
+    );
+    const upCloud = getByRole("button", { name: "UpCloud" }).closest("li");
+    expect(gcp).toHaveAttribute("aria-current", "location");
+    expect(aws).not.toHaveAttribute("aria-current");
+    expect(azure).not.toHaveAttribute("aria-current");
+    expect(digitalOcean).not.toHaveAttribute("aria-current");
+    expect(upCloud).not.toHaveAttribute("aria-current");
   });
 });
 

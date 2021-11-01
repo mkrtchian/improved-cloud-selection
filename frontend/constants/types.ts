@@ -13,6 +13,12 @@ type CloudsObject = {
   clouds: Clouds;
 };
 
+type OrganizedClouds = {
+  [provider: string]: {
+    [region: string]: Clouds;
+  };
+};
+
 type GeoPosition = {
   longitude: number;
   latitude: number;
@@ -50,5 +56,6 @@ export type {
   GeoPosition,
   GeoPositionResponse,
   EmptyResponse,
+  OrganizedClouds,
 };
 export { isGeoPositionResponse };
