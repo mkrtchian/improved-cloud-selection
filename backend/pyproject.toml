@@ -33,7 +33,7 @@ flake8-debugger = "^4.0.0"
 flake8-eradicate = "^1.2.0"
 flake8-broken-line = "^0.4.0"
 pep8-naming = "^0.12.1"
-mypy = "^0.920"
+mypy = "^0.930"
 pre-commit = "^2.16.0"
 types-requests = "^2.26.2"
 
