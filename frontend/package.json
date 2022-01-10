@@ -48,7 +48,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.5",
     "jest-watch-typeahead": "^1.0.0",
-    "playwright": "^1.17.1",
+    "playwright": "^1.17.2",
     "pm2": "^5.1.1",
     "prettier": "^2.5.1",
     "ts-node": "^10.4.0",
