@@ -574,10 +574,10 @@
     lodash.merge "^4.6.2"
     lodash.mergewith "^4.6.2"
 
-"@codeceptjs/configure@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@codeceptjs/configure/-/configure-0.7.0.tgz#f3da3ada97f5517145c8c3b91afeb7a9c13901cc"
-  integrity sha512-QhISn+eKuDLS7tZNSRqzRu4FvAKdq17EjYcj8rX2mJMhBElFCVGOICvJ/H1G/L3fV0PXjVtu7ErirDAkJNgs2w==
+"@codeceptjs/configure@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@codeceptjs/configure/-/configure-0.8.0.tgz#5eba9dae3cfe8f8fd0049d157aff1a793ddf93bf"
+  integrity sha512-fwB44Ww1/dVX5l0ZKL8/bDcAcmgTMqKDMr3hNTItyKeD0kcoLIEQWHGlVpgkZzCrRzmgMnywAuOA7t7AWxcvGw==
   dependencies:
     lodash.merge "^4.6.2"
     lodash.mergewith "^4.6.2"

@@ -28,7 +28,7 @@
     "swr": "^1.2.1"
   },
   "devDependencies": {
-    "@codeceptjs/configure": "^0.7.0",
+    "@codeceptjs/configure": "^0.8.0",
     "@next/eslint-plugin-next": "^12.0.9",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
