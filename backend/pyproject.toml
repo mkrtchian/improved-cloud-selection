@@ -35,7 +35,7 @@ flake8-broken-line = "^0.4.0"
 pep8-naming = "^0.12.1"
 mypy = "^0.931"
 pre-commit = "^2.17.0"
-types-requests = "^2.27.7"
+types-requests = "^2.27.8"
 
 [tool.isort]
 profile = "black"
