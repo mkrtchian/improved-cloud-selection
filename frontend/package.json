@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@codeceptjs/configure": "^0.8.0",
-    "@next/eslint-plugin-next": "^12.0.10",
+    "@next/eslint-plugin-next": "^12.1.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.4.0",
