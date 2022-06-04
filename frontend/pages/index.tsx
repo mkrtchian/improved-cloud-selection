@@ -41,6 +41,8 @@ function Home({ cloudsObject }: HomeProps): JSX.Element {
         <CloudProviders
           setSelectedProvider={setSelectedProvider}
           selectedProvider={selectedProvider}
+          organizedClouds={organizedClouds}
+          userLocation={userLocation}
         />
         {selectedProviderExists && (
           <>

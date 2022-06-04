@@ -1,8 +1,12 @@
 import styles from "./CloudProviders.module.scss";
+import { GeoPosition, OrganizedClouds } from "../constants/types";
+import { useSetInitialProvider } from "../hooks";
 
 type CloudProvidersProps = {
   setSelectedProvider: (selectedProvider: string) => void;
   selectedProvider: string;
+  organizedClouds: OrganizedClouds;
+  userLocation?: GeoPosition;
 };
 
 /**
@@ -11,6 +15,8 @@ type CloudProvidersProps = {
 function CloudProviders({
   setSelectedProvider,
   selectedProvider,
+  organizedClouds,
+  userLocation,
 }: CloudProvidersProps): JSX.Element {
   const cloudProviders = [
     // All the SVGs used below are the attribution of the related
@@ -25,6 +31,11 @@ function CloudProviders({
     { name: "DigitalOcean", src: "/images/digital_ocean_logo.svg" },
     { name: "UpCloud", src: "/images/upcloud_logo.svg" },
   ];
+  useSetInitialProvider({
+    organizedClouds,
+    setSelectedProvider,
+    userLocation,
+  });
   function handleClickProvider(providerName) {
     setSelectedProvider(providerName);
   }
