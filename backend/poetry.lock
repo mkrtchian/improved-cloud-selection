@@ -870,7 +870,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "types-requests"
-version = "2.28.3"
+version = "2.28.6"
 description = "Typing stubs for requests"
 category = "dev"
 optional = false
@@ -945,7 +945,7 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "c081be8184c727afa29217beaaaae01fad834f20d10db1d45e28e806723deef4"
+content-hash = "37a14e4983f883bebc6ca6d4fa2d443ea6220427be80da4ce637b12f80d8e750"
 
 [metadata.files]
 anyio = [
@@ -1380,8 +1380,8 @@ tomli = [
     {file = "tomli-1.2.1.tar.gz", hash = "sha256:a5b75cb6f3968abb47af1b40c1819dc519ea82bcc065776a866e8d74c5ca9442"},
 ]
 types-requests = [
-    {file = "types-requests-2.28.3.tar.gz", hash = "sha256:fb9ea69311766967f9e91861211ec7449f6484025b766ea709689c0dbb29d7ba"},
-    {file = "types_requests-2.28.3-py3-none-any.whl", hash = "sha256:66f0e427708588d4dac2f365a0b2c1ad8f31780429fd8ad193fec93139b22112"},
+    {file = "types-requests-2.28.6.tar.gz", hash = "sha256:cf3383bbd79394bf051a0a9202d6831fa962f186f923c178f7c059e3424bd00e"},
+    {file = "types_requests-2.28.6-py3-none-any.whl", hash = "sha256:d8d7607419cd4b41a7b9497e15e8c0bad78d50df43c48ad25bc526a11518c3a9"},
 ]
 types-urllib3 = [
     {file = "types-urllib3-1.26.7.tar.gz", hash = "sha256:cfd1fbbe4ba9a605ed148294008aac8a7b8b7472651d1cc357d507ae5962e3d2"},
